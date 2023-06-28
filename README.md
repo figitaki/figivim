@@ -1,0 +1,3 @@
+# FigiVim
+
+Neovim configuration.
