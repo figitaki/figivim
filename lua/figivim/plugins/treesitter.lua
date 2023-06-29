@@ -7,17 +7,17 @@ local M = {
 
 M.config = function()
   require "nvim-treesitter.install".compilers = { 'gcc-12' }
+  require 'nvim-treesitter.configs'.setup {
+    ensure_installed = { "javascript", "tsx", "typescript", "graphql", "vim", "lua" },
+
+    auto_install = true,
+
+    highlight = {
+      enable = true,
+    }
+  }
+
   vim.cmd('TSUpdate')
 end
-
-M.opts = {
-  ensure_installed = { "javascript", "typescript", "graphql", "vim", "lua" },
-
-  auto_install = true,
-
-  highlight = {
-    enable = true,
-  }
-}
 
 return M
