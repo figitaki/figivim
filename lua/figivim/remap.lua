@@ -26,4 +26,4 @@ vim.keymap.set('n', '<leader><space>', '<cmd>nohlsearch<cr>')
 -- folds
 vim.keymap.set('n', '<space>', 'za')
 
-vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
+vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
