@@ -44,5 +44,7 @@ vim.opt.swapfile = false
 vim.opt.undodir = os.getenv("HOME") .. '/.vim/undodir'
 vim.opt.undofile = true
 
+vim.cmd [[ filetype plugin indent on ]]
+
 vim.opt.hlsearch = true
 vim.opt.incsearch = true

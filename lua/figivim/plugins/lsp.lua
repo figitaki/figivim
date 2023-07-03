@@ -15,8 +15,12 @@ local M = {
 
     -- Autocompletion
     { 'hrsh7th/nvim-cmp' },     -- Required
+    { 'saadparwaiz1/cmp_luasnip' },
     { 'hrsh7th/cmp-nvim-lsp' }, -- Required
     { 'L3MON4D3/LuaSnip' },     -- Required
+    { 'rafamadriz/friendly-snippets' },
+
+    { 'glepnir/lspsaga.nvim' },
   },
 }
 
@@ -49,19 +53,40 @@ M.config = function()
     lsp.buffer_autoformat()
   end)
 
+
   require 'lspconfig'.denols.setup {}
   require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
+  require('lspconfig.configs').sourcekit = {
+    default_config = {
+      cmd = { 'sourcekit-lsp' },
+      filetypes = { 'swift', 'c', 'cpp', 'objective-c', 'objective-cpp' },
+      root_dir = require('lspconfig.util')
+          .root_pattern('Package.swift', 'buildServer.json', 'compile_commands.json',
+            '.git'),
+    }
+  }
+
+  require('lspconfig').sourcekit.setup({})
 
   lsp.setup()
 
+  -- Completion configuration
   local cmp = require('cmp')
   local cmp_action = require('lsp-zero').cmp_action()
+
+  require("luasnip.loaders.from_vscode").lazy_load()
 
   cmp.setup({
     preselect = 'item',
     completion = {
       completeopt = 'menu,menuone,noinsert'
     },
+    sources = cmp.config.sources({
+      { name = 'nvim_lsp' },
+      { name = 'luasnip' }
+    }, {
+      { name = 'buffer' },
+    }),
     mapping = cmp.mapping.preset.insert({
       ['<CR>'] = cmp.mapping.confirm({ select = true }),
       ['<C-Space>'] = cmp.mapping.complete(),

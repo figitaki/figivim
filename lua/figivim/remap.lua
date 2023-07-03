@@ -4,6 +4,10 @@ vim.keymap.set('n', '<c-k>', '<c-w><c-k>')
 vim.keymap.set('n', '<c-l>', '<c-w><c-l>')
 vim.keymap.set('n', '<c-h>', '<c-w><c-h>')
 
+-- better C-d/u navigation, center cursor
+vim.keymap.set('', '<C-d>', '<C-d>zz')
+vim.keymap.set('', '<C-u>', '<C-u>zz')
+
 -- move vertically by visual line when on a wrapped line
 vim.keymap.set('', 'j', 'gj')
 vim.keymap.set('', 'k', 'gk')

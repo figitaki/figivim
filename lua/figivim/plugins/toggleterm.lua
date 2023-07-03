@@ -38,6 +38,10 @@ M.config = function()
     "<cmd>lua _lazygit_toggle()<CR>",
     { noremap = true, silent = true }
   )
+
+  vim.keymap.set('v', '<C-o>', function()
+    require 'toggleterm'.send_lines_to_terminal("visual_selection", true, '1')
+  end)
 end
 
 return M

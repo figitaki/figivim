@@ -2,6 +2,7 @@ local M = {
   'nvim-treesitter/nvim-treesitter',
   dependencies = {
     'nvim-treesitter/playground',
+    'nvim-treesitter/nvim-treesitter-textobjects',
   },
 }
 
@@ -14,6 +15,19 @@ M.config = function()
 
     highlight = {
       enable = true,
+    },
+
+    textobjects = {
+      select = {
+        enable = true,
+
+        lookahead = true,
+
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+        ["ac"] = "@class.outer",
+        ["ic"] = "@class.inner"
+      }
     }
   }
 
