@@ -95,6 +95,13 @@ M.config = function()
       ['<C-b>'] = cmp_action.luasnip_jump_backward(),
     })
   })
+
+  -- lspsaga config
+  require('lspsaga').setup({})
+
+  local keymap = vim.keymap.setup
+
+  keymap('n', 'gh', '<cmd>Lspsaga lsp_finder')
 end
 
 return M
