@@ -29,6 +29,7 @@ M.config = function()
           hook = remap,
         },
       },
+      ["core.completion"] = { config = { engine = "nvim-cmp" } },
       ["core.concealer"] = {
         config = {
           icons = {
@@ -40,13 +41,15 @@ M.config = function()
           }
         }
       },                                  -- Adds pretty icons to your documents
+      ["core.esupports.indent"] = {},
       ["core.integrations.truezen"] = {}, -- Adds support for true-zen integration
       ["core.integrations.telescope"] = {},
-      ["core.dirman"] = {                 -- Manages Neorg workspaces
+      ["core.export"] = {},
+      ["core.export.markdown"] = {},
+      ["core.dirman"] = { -- Manages Neorg workspaces
         config = {
           workspaces = {
             notes = "~/notes",
-            lassie = "~/src/lassie/notes"
           },
         },
       },
