@@ -17,10 +17,12 @@ local M = {
     { 'hrsh7th/nvim-cmp' },     -- Required
     { 'saadparwaiz1/cmp_luasnip' },
     { 'hrsh7th/cmp-nvim-lsp' }, -- Required
+    { 'hrsh7th/cmp-nvim-lua' },
     { 'L3MON4D3/LuaSnip' },     -- Required
     { 'rafamadriz/friendly-snippets' },
 
     { 'glepnir/lspsaga.nvim' },
+    { 'f3fora/nvim-texlabconfig' },
   },
 }
 
@@ -53,9 +55,9 @@ M.config = function()
     lsp.buffer_autoformat()
   end)
 
-
   require 'lspconfig'.denols.setup {}
   require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
+
   require('lspconfig.configs').sourcekit = {
     default_config = {
       cmd = { 'sourcekit-lsp' },
@@ -65,8 +67,30 @@ M.config = function()
             '.git'),
     }
   }
-
   require('lspconfig').sourcekit.setup({})
+  require('lspconfig').texlab.setup {
+    settings = {
+      texlab = {
+        forwardSearch = {
+          executable = "/Applications/Skim.app/Contents/SharedSupport/displayline",
+          args = { "-g", "%l", "%p", "%f" },
+        },
+        auxDirectory = "build/default/",
+        build = {
+          executable = "tectonic",
+          onSave = true,
+          forwardSearchAfter = true,
+          filename = "default.pdf",
+          args = {
+            "-X",
+            "build",
+            "--keep-logs",
+            "--keep-intermediates"
+          }
+        }
+      }
+    }
+  }
 
   lsp.setup()
 
@@ -83,6 +107,8 @@ M.config = function()
     },
     sources = cmp.config.sources({
       { name = 'nvim_lsp' },
+      { name = 'neorg' },
+      { name = 'nvim_lua' },
       { name = 'luasnip' }
     }, {
       { name = 'buffer' },
@@ -98,10 +124,7 @@ M.config = function()
 
   -- lspsaga config
   require('lspsaga').setup({})
-
-  local keymap = vim.keymap.setup
-
-  keymap('n', 'gh', '<cmd>Lspsaga lsp_finder')
+  vim.keymap.set('n', 'gh', '<cmd>Lspsaga lsp_finder')
 end
 
 return M
