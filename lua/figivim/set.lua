@@ -48,3 +48,5 @@ vim.cmd [[ filetype plugin indent on ]]
 
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
+
+vim.cmd([[ autocmd BufRead,BufNewFile *.tex set filetype=tex ]])
