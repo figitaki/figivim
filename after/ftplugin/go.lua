@@ -1,6 +1,6 @@
-vim.opt.expandtab = false
-vim.opt.copyindent = true
-vim.opt.preserveindent = true
-vim.opt.softtabstop = 0
-vim.opt.tabstop = 4
-vim.opt.shiftwidth = 4
+vim.opt_local.expandtab = false
+vim.opt_local.copyindent = true
+vim.opt_local.preserveindent = true
+vim.opt_local.softtabstop = 0
+vim.opt_local.tabstop = 4
+vim.opt_local.shiftwidth = 4
