@@ -12,10 +12,6 @@ vim.keymap.set('', '<C-u>', '<C-u>zz')
 vim.keymap.set('', 'j', 'gj')
 vim.keymap.set('', 'k', 'gk')
 
--- better maps for start and end of line
-vim.keymap.set('n', 'B', '^')
-vim.keymap.set('n', 'E', '$')
-
 -- vv to generate a vertical split
 vim.keymap.set('n', 'vv', '<C-w>v', { silent = true })
 
@@ -31,3 +27,5 @@ vim.keymap.set('n', '<leader><space>', '<cmd>nohlsearch<cr>')
 vim.keymap.set('n', '<space>', 'za')
 
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
+
+vim.keymap.set('n', '<leader>rs', '<cmd>so ~/.config/nvim/lua/figivim/snippets/init.lua<cr>')

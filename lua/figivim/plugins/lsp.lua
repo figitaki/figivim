@@ -97,8 +97,10 @@ M.config = function()
   -- Completion configuration
   local cmp = require('cmp')
   local cmp_action = require('lsp-zero').cmp_action()
+  local ls = require('luasnip')
 
   require("luasnip.loaders.from_vscode").lazy_load()
+  require("figivim.snippets")
 
   cmp.setup({
     preselect = 'item',
@@ -113,12 +115,31 @@ M.config = function()
     }, {
       { name = 'buffer' },
     }),
+    snippet = {
+      expand = function(args)
+        require 'luasnip'.lsp_expand(args.body)
+      end
+    },
     mapping = cmp.mapping.preset.insert({
       ['<CR>'] = cmp.mapping.confirm({ select = true }),
       ['<C-Space>'] = cmp.mapping.complete(),
       ['<C-e>'] = cmp.mapping.abort(),
       ['<C-f>'] = cmp_action.luasnip_jump_forward(),
       ['<C-b>'] = cmp_action.luasnip_jump_backward(),
+      ['<C-l>'] = cmp.mapping(function(fallback)
+        if ls.choice_active() then
+          ls.change_choice(1)
+        else
+          fallback()
+        end
+      end, { 'i', 's' }),
+      ['<C-h>'] = cmp.mapping(function(fallback)
+        if ls.choice_active() then
+          ls.change_choice(-1)
+        else
+          fallback()
+        end
+      end, { 'i', 's' })
     })
   })
 
