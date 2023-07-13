@@ -5,6 +5,8 @@ local M = {
   },
 }
 
-M.opts = {}
+M.opts = {
+  -- OR in winbar
+}
 
 return M

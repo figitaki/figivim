@@ -23,6 +23,10 @@ local M = {
 
     { 'glepnir/lspsaga.nvim' },
     { 'f3fora/nvim-texlabconfig' },
+
+    { 'github/copilot.vim' },
+
+    { 'sigmaSd/deno-nvim' }
   },
 }
 
@@ -96,16 +100,17 @@ M.config = function()
 
   -- Completion configuration
   local cmp = require('cmp')
-  local cmp_action = require('lsp-zero').cmp_action()
   local ls = require('luasnip')
 
   require("luasnip.loaders.from_vscode").lazy_load()
   require("figivim.snippets")
 
+  require('cmp_nvim_lsp').setup()
+
   cmp.setup({
-    preselect = 'item',
+    preselect = cmp.PreselectMode.None,
     completion = {
-      completeopt = 'menu,menuone,noinsert'
+      completeopt = 'menu,menuone,noselect,noinsert'
     },
     sources = cmp.config.sources({
       { name = 'nvim_lsp' },
@@ -120,27 +125,50 @@ M.config = function()
         require 'luasnip'.lsp_expand(args.body)
       end
     },
-    mapping = cmp.mapping.preset.insert({
-      ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    mapping = {
+      ['<Tab>'] = cmp.config.disable,
+      ['<S-Tab>'] = cmp.config.disable,
+      ['<CR>'] = cmp.mapping.confirm(),
       ['<C-Space>'] = cmp.mapping.complete(),
       ['<C-e>'] = cmp.mapping.abort(),
-      ['<C-f>'] = cmp_action.luasnip_jump_forward(),
-      ['<C-b>'] = cmp_action.luasnip_jump_backward(),
-      ['<C-l>'] = cmp.mapping(function(fallback)
-        if ls.choice_active() then
+      ['<C-j>'] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.select_next_item()
+        elseif ls.choice_active() then
           ls.change_choice(1)
+        else
+          local copilot_text = vim.fn['copilot#Accept']()
+          if copilot_text ~= "" then
+            vim.cmd([[call copilot#Next()]])
+          else
+            fallback()
+          end
+        end
+      end, { 'i' }),
+      ['<C-k>'] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.select_prev_item()
+        elseif ls.choice_active() then
+          ls.change_choice(-1)
+        else
+          fallback()
+        end
+      end, { 'i' }),
+      ['<C-l>'] = cmp.mapping(function(fallback)
+        if ls.jumpable() then
+          ls.jump(1)
         else
           fallback()
         end
       end, { 'i', 's' }),
       ['<C-h>'] = cmp.mapping(function(fallback)
-        if ls.choice_active() then
-          ls.change_choice(-1)
+        if ls.jumpable(-1) then
+          ls.jump(-1)
         else
           fallback()
         end
       end, { 'i', 's' })
-    })
+    }
   })
 
   -- lspsaga config
