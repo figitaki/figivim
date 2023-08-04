@@ -26,7 +26,7 @@ local M = {
 
     { 'github/copilot.vim' },
 
-    { 'sigmaSd/deno-nvim' }
+    -- { 'sigmaSd/deno-nvim' }
   },
 }
 
@@ -36,7 +36,7 @@ M.config = function()
   })
 
   lsp.ensure_installed({
-    'denols',
+    -- 'denols',
     'tsserver',
     'eslint',
     'rust_analyzer'
@@ -54,12 +54,17 @@ M.config = function()
         client.stop()
         return
       end
+    else
+      if client.name == "denols" then
+        client.stop()
+        return
+      end
     end
 
     lsp.buffer_autoformat()
   end)
 
-  require 'lspconfig'.denols.setup {}
+  -- require 'lspconfig'.denols.setup {}
   require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
 
   require('lspconfig.configs').sourcekit = {

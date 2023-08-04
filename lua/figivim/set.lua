@@ -26,7 +26,7 @@ vim.opt.listchars = {
   space = '·'
 }
 
-vim.opt.scrolloff = 30
+vim.opt.scrolloff = 20
 vim.opt.signcolumn = 'yes'
 vim.opt.isfname:append('@-@')
 
