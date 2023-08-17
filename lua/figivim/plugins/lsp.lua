@@ -65,7 +65,9 @@ M.config = function()
   end)
 
   -- require 'lspconfig'.denols.setup {}
-  require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
+  local lspconfig = require('lspconfig')
+
+  lspconfig.lua_ls.setup(lsp.nvim_lua_ls())
 
   require('lspconfig.configs').sourcekit = {
     default_config = {
@@ -76,8 +78,8 @@ M.config = function()
             '.git'),
     }
   }
-  require('lspconfig').sourcekit.setup({})
-  require('lspconfig').texlab.setup {
+  lspconfig.sourcekit.setup({})
+  lspconfig.texlab.setup {
     settings = {
       texlab = {
         forwardSearch = {
@@ -100,6 +102,7 @@ M.config = function()
       }
     }
   }
+  -- lspconfig.prettier.setup({})
 
   lsp.setup()
 
@@ -178,7 +181,8 @@ M.config = function()
 
   -- lspsaga config
   require('lspsaga').setup({})
-  vim.keymap.set('n', 'gh', '<cmd>Lspsaga lsp_finder')
+  vim.keymap.set('n', 'gh', '<cmd>Lspsaga lsp_finder<cr>')
+  vim.keymap.set('n', 'gk', '<cmd>Lspsaga show_cursor_diagnostics<cr>')
 end
 
 return M

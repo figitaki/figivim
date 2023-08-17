@@ -18,7 +18,7 @@ vim.keymap.set('n', 'vv', '<C-w>v', { silent = true })
 -- buffer navigation
 vim.keymap.set('n', '<leader>]', '<cmd>bn<cr>')
 vim.keymap.set('n', '<leader>[', '<cmd>bp<cr>')
-vim.keymap.set('n', '<leader>x', '<cmd>bd<cr>')
+vim.keymap.set('n', '<leader>x', '<cmd>bn<bar>bd#<cr>')
 
 -- toggle search highlight
 vim.keymap.set('n', '<leader><space>', '<cmd>nohlsearch<cr>')
