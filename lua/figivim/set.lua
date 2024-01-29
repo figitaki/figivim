@@ -15,11 +15,11 @@ vim.opt.smartindent = true
 
 vim.opt.wrap = true
 
-vim.opt.colorcolumn = "80"
+vim.opt.colorcolumn = "120"
 
 vim.opt.termguicolors = true
 
-vim.opt.list = true
+vim.opt.list = false
 vim.opt.listchars = {
   eol = '¬',
   tab = '»-',

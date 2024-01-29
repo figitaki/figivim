@@ -1,5 +1,4 @@
 local ls              = require("luasnip")
-local ls              = require("luasnip")
 
 -- some shorthands...
 local s, i, t         = ls.s, ls.insert_node, ls.text_node

@@ -8,6 +8,7 @@ local M = {
     require("auto-session").setup {
       log_level = "error",
       auto_save_enabled = true,
+      auto_session_enable_last_session = true,
       auto_session_suppress_dirs = { "~/", "~/Projects", "~/Downloads", "/" },
     }
 

@@ -15,7 +15,7 @@ local M = {
 
     -- Autocompletion
     { 'hrsh7th/nvim-cmp' },     -- Required
-    { 'saadparwaiz1/cmp_luasnip' },
+    -- { 'saadparwaiz1/cmp_luasnip' },
     { 'hrsh7th/cmp-nvim-lsp' }, -- Required
     { 'hrsh7th/cmp-nvim-lua' },
     { 'L3MON4D3/LuaSnip' },     -- Required
@@ -60,8 +60,6 @@ M.config = function()
         return
       end
     end
-
-    lsp.buffer_autoformat()
   end)
 
   -- require 'lspconfig'.denols.setup {}
@@ -108,10 +106,10 @@ M.config = function()
 
   -- Completion configuration
   local cmp = require('cmp')
-  local ls = require('luasnip')
+  -- local ls = require('luasnip')
 
-  require("luasnip.loaders.from_vscode").lazy_load()
-  require("figivim.snippets")
+  -- require("luasnip.loaders.from_vscode").lazy_load()
+  -- require("figivim.snippets")
 
   require('cmp_nvim_lsp').setup()
 
@@ -124,13 +122,13 @@ M.config = function()
       { name = 'nvim_lsp' },
       { name = 'neorg' },
       { name = 'nvim_lua' },
-      { name = 'luasnip' }
+     -- { name = 'luasnip' }
     }, {
       { name = 'buffer' },
     }),
     snippet = {
       expand = function(args)
-        require 'luasnip'.lsp_expand(args.body)
+        -- require 'luasnip'.lsp_expand(args.body)
       end
     },
     mapping = {
@@ -142,8 +140,8 @@ M.config = function()
       ['<C-j>'] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_next_item()
-        elseif ls.choice_active() then
-          ls.change_choice(1)
+        -- elseif ls.choice_active() then
+          -- ls.change_choice(1)
         else
           local copilot_text = vim.fn['copilot#Accept']()
           if copilot_text ~= "" then
@@ -156,31 +154,35 @@ M.config = function()
       ['<C-k>'] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_prev_item()
-        elseif ls.choice_active() then
-          ls.change_choice(-1)
+        -- elseif ls.choice_active() then
+          --ls.change_choice(-1)
         else
           fallback()
         end
       end, { 'i' }),
       ['<C-l>'] = cmp.mapping(function(fallback)
-        if ls.jumpable() then
-          ls.jump(1)
-        else
+        --if ls.jumpable() then
+          --ls.jump(1)
+        -- else
           fallback()
-        end
+        --end
       end, { 'i', 's' }),
       ['<C-h>'] = cmp.mapping(function(fallback)
-        if ls.jumpable(-1) then
-          ls.jump(-1)
-        else
+        -- if ls.jumpable(-1) then
+          --ls.jump(-1)
+        --else
           fallback()
-        end
+        --end
       end, { 'i', 's' })
     }
   })
 
   -- lspsaga config
-  require('lspsaga').setup({})
+  require('lspsaga').setup({
+    lightbulb = {
+      enable = false,
+    }
+  })
   vim.keymap.set('n', 'gh', '<cmd>Lspsaga lsp_finder<cr>')
   vim.keymap.set('n', 'gk', '<cmd>Lspsaga show_cursor_diagnostics<cr>')
 end
