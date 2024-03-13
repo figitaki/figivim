@@ -42,7 +42,11 @@ M.config = function()
         }
       },                                  -- Adds pretty icons to your documents
       ["core.esupports.indent"] = {},
-      ["core.integrations.truezen"] = {}, -- Adds support for true-zen integration
+      ["core.presenter"] = {
+        config = {
+          zen_mode = "truezen",
+        },
+      },
       ["core.integrations.telescope"] = {},
       ["core.export"] = {},
       ["core.export.markdown"] = {},
