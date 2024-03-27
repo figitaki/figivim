@@ -8,11 +8,16 @@ local M = {
       -- Use a sub-list to run only the first available formatter
       javascript = { { "prettier" } },
     },
-    format_on_save = {
-      timeout_ms = 750,
-      lsp_fallback = false,
-    }
   },
 }
+
+M.setup = function()
+  vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = "*",
+    callback = function(args)
+      require('conform').format({ bufnr = args.bufnr })
+    end
+  })
+end
 
 return M
