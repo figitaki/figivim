@@ -22,6 +22,7 @@ vim.keymap.set('n', '<leader>x', '<cmd>bn<bar>bd#<cr>')
 
 -- toggle search highlight
 vim.keymap.set('n', '<leader><space>', '<cmd>nohlsearch<cr>')
+vim.keymap.set('n', '<esc>u', '<cmd>nohlsearch<cr>')
 
 -- folds
 vim.keymap.set('n', '<space>', 'za')

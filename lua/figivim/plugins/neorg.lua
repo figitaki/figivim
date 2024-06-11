@@ -1,7 +1,8 @@
 local M = {
-  'nvim-neorg/neorg',
-  build = ':Neorg sync-parsers',
-  dependencies = { 'nvim-lua/plenary.nvim', { "nvim-neorg/neorg-telescope" } },
+  "nvim-neorg/neorg",
+  dependencies = { "luarocks.nvim" },
+  lazy = false,  -- Disable lazy loading as some `lazy.nvim` distributions set `lazy = true` by default
+  version = "*", -- Pin Neorg to the latest stable release
 }
 
 local remap = function(keybinds)
@@ -40,14 +41,15 @@ M.config = function()
             }
           }
         }
-      },                                  -- Adds pretty icons to your documents
+      }, -- Adds pretty icons to your documents
       ["core.esupports.indent"] = {},
+      ["core.esupports.metagen"] = {},
       ["core.presenter"] = {
         config = {
           zen_mode = "truezen",
         },
       },
-      ["core.integrations.telescope"] = {},
+      -- ["core.integrations.telescope"] = {},
       ["core.export"] = {},
       ["core.export.markdown"] = {},
       ["core.dirman"] = { -- Manages Neorg workspaces
@@ -80,6 +82,5 @@ M.config = function()
 
   vim.keymap.set('n', '<leader>n', ':Neorg workspace notes<CR>')
 end
-
 
 return M

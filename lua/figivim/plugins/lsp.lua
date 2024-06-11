@@ -76,7 +76,11 @@ M.config = function()
             '.git'),
     }
   }
-  lspconfig.sourcekit.setup({})
+  lspconfig.sourcekit.setup {
+    cmd = { "/Users/figitaki/.local/share/nvim/mason/bin/elixir-ls" }
+  }
+  lspconfig.elixirls.setup({})
+  lspconfig.ocamllsp.setup({})
   lspconfig.texlab.setup {
     settings = {
       texlab = {
@@ -122,7 +126,7 @@ M.config = function()
       { name = 'nvim_lsp' },
       { name = 'neorg' },
       { name = 'nvim_lua' },
-     -- { name = 'luasnip' }
+      -- { name = 'luasnip' }
     }, {
       { name = 'buffer' },
     }),
@@ -140,7 +144,7 @@ M.config = function()
       ['<C-j>'] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_next_item()
-        -- elseif ls.choice_active() then
+          -- elseif ls.choice_active() then
           -- ls.change_choice(1)
         else
           local copilot_text = vim.fn['copilot#Accept']()
@@ -154,7 +158,7 @@ M.config = function()
       ['<C-k>'] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_prev_item()
-        -- elseif ls.choice_active() then
+          -- elseif ls.choice_active() then
           --ls.change_choice(-1)
         else
           fallback()
@@ -162,16 +166,16 @@ M.config = function()
       end, { 'i' }),
       ['<C-l>'] = cmp.mapping(function(fallback)
         --if ls.jumpable() then
-          --ls.jump(1)
+        --ls.jump(1)
         -- else
-          fallback()
+        fallback()
         --end
       end, { 'i', 's' }),
       ['<C-h>'] = cmp.mapping(function(fallback)
         -- if ls.jumpable(-1) then
-          --ls.jump(-1)
+        --ls.jump(-1)
         --else
-          fallback()
+        fallback()
         --end
       end, { 'i', 's' })
     }
