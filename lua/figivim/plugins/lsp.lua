@@ -1,6 +1,6 @@
 local M = {
   'VonHeikemen/lsp-zero.nvim',
-  branch = 'v2.x',
+  branch = 'v3.x',
   priority = 100,
   dependencies = {
     -- LSP Support
@@ -15,7 +15,6 @@ local M = {
 
     -- Autocompletion
     { 'hrsh7th/nvim-cmp' },     -- Required
-    -- { 'saadparwaiz1/cmp_luasnip' },
     { 'hrsh7th/cmp-nvim-lsp' }, -- Required
     { 'hrsh7th/cmp-nvim-lua' },
     { 'L3MON4D3/LuaSnip' },     -- Required
@@ -25,8 +24,6 @@ local M = {
     { 'f3fora/nvim-texlabconfig' },
 
     { 'github/copilot.vim' },
-
-    -- { 'sigmaSd/deno-nvim' }
   },
 }
 
@@ -36,7 +33,6 @@ M.config = function()
   })
 
   lsp.ensure_installed({
-    -- 'denols',
     'tsserver',
     'eslint',
     'rust_analyzer'
@@ -62,7 +58,6 @@ M.config = function()
     end
   end)
 
-  -- require 'lspconfig'.denols.setup {}
   local lspconfig = require('lspconfig')
 
   lspconfig.lua_ls.setup(lsp.nvim_lua_ls())
@@ -104,16 +99,15 @@ M.config = function()
       }
     }
   }
-  -- lspconfig.prettier.setup({})
 
   lsp.setup()
 
   -- Completion configuration
   local cmp = require('cmp')
-  -- local ls = require('luasnip')
+  local ls = require('luasnip')
 
-  -- require("luasnip.loaders.from_vscode").lazy_load()
-  -- require("figivim.snippets")
+  require("luasnip.loaders.from_vscode").lazy_load()
+  require("figivim.snippets")
 
   require('cmp_nvim_lsp').setup()
 
@@ -126,13 +120,13 @@ M.config = function()
       { name = 'nvim_lsp' },
       { name = 'neorg' },
       { name = 'nvim_lua' },
-      -- { name = 'luasnip' }
+      { name = 'luasnip' }
     }, {
       { name = 'buffer' },
     }),
     snippet = {
       expand = function(args)
-        -- require 'luasnip'.lsp_expand(args.body)
+        ls.lsp_expand(args.body)
       end
     },
     mapping = {
@@ -144,8 +138,8 @@ M.config = function()
       ['<C-j>'] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_next_item()
-          -- elseif ls.choice_active() then
-          -- ls.change_choice(1)
+        elseif ls.choice_active() then
+          ls.change_choice(1)
         else
           local copilot_text = vim.fn['copilot#Accept']()
           if copilot_text ~= "" then
@@ -158,25 +152,25 @@ M.config = function()
       ['<C-k>'] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_prev_item()
-          -- elseif ls.choice_active() then
-          --ls.change_choice(-1)
+        elseif ls.choice_active() then
+          ls.change_choice(-1)
         else
           fallback()
         end
       end, { 'i' }),
       ['<C-l>'] = cmp.mapping(function(fallback)
-        --if ls.jumpable() then
-        --ls.jump(1)
-        -- else
-        fallback()
-        --end
+        if ls.jumpable() then
+          ls.jump(1)
+        else
+          fallback()
+        end
       end, { 'i', 's' }),
       ['<C-h>'] = cmp.mapping(function(fallback)
-        -- if ls.jumpable(-1) then
-        --ls.jump(-1)
-        --else
-        fallback()
-        --end
+        if ls.jumpable(-1) then
+          ls.jump(-1)
+        else
+          fallback()
+        end
       end, { 'i', 's' })
     }
   })

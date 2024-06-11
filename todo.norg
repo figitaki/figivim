@@ -4,10 +4,19 @@ description: A list of tasks to be done in my Neovim configuration
 authors: figitaki
 categories: 
 created: 2024-06-05T16:24:11-0800
-updated: 2024-06-05T16:25:56-0800
+updated: 2024-06-06T12:25:27-0800
 version: 1.1.1
 @end
 
 * Figivim outstanding tasks
   - ( ) Re-enable luasnip
+  - ( ) Install fugitive for git integration
 
+  @code c
+  #include <stdio.h>
+  
+  int main() {
+      printf("Hello, World!");
+      return 0;
+  }
+  @end

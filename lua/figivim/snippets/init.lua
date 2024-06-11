@@ -1,12 +1,9 @@
 local ls              = require("luasnip")
-
--- some shorthands...
 local s, i, t         = ls.s, ls.insert_node, ls.text_node
 local fmt             = require('luasnip.extras.fmt').fmt
 local c               = ls.choice_node
 local f               = ls.function_node
 local d               = ls.dynamic_node
--- snippet node
 local sn              = ls.sn
 
 local get_test_result = function(position)
@@ -25,42 +22,45 @@ local get_test_result = function(position)
   end, {})
 end
 
-ls.add_snippets(nil, {
-  lua = {
-    s("lsreq", fmt([[local {} = require "{}"]],
-      { f(function(import_name)
-        local parts = vim.split(import_name[1][1], '.')
-        return parts[#parts] or ""
-      end, { 1 }), i(1) }))
-  },
+ls.add_snippets("all", {
+  s("ternary", i(1, "cond"), t " ? ", i(2, "then"), t " : ", i(3, "else")),
+})
 
-  go = {
-    s("struct", fmt([[type {} struct {}]], { i(1), i(2) })),
-  },
+ls.add_snippets("lua", {
+  s("lsreq", fmt([[local {} = require "{}"]],
+    { f(function(import_name)
+      local parts = vim.split(import_name[1][1], '.')
+      return parts[#parts] or ""
+    end, { 1 }), i(1) }))
+})
 
-  rust = {
-    -- Rust: adding a test case
-    s(
-      "test",
-      fmt(
-        [[
+ls.add_snippets("go", {
+  s("struct", fmt([[type {} struct {}]], { i(1), i(2) })),
+})
+
+ls.add_snippets("rust", {
+  -- Rust: adding a test case
+  s(
+    "test",
+    fmt(
+      [[
           #[test]
           fn {}(){}{{
             {}
           }}
         ]],
-        {
-          i(1, "testname"),
-          get_test_result(2),
-          i(0),
-        }
-      )
-    ),
+      {
+        i(1, "testname"),
+        get_test_result(2),
+        i(0),
+      }
+    )
+  ),
 
-    s(
-      "modtest",
-      fmt(
-        [[
+  s(
+    "modtest",
+    fmt(
+      [[
           #[cfg(test)]
           mod test {{
           {}
@@ -68,11 +68,10 @@ ls.add_snippets(nil, {
             {}
           }}
         ]],
-        {
-          c(1, { t "  use super::*;", t "" }),
-          i(0)
-        }
-      )
-    ),
-  }
-}, { key = "figisnips" })
+      {
+        c(1, { t "  use super::*;", t "" }),
+        i(0)
+      }
+    )
+  ),
+})
