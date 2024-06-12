@@ -22,10 +22,6 @@ local get_test_result = function(position)
   end, {})
 end
 
-ls.add_snippets("all", {
-  s("ternary", i(1, "cond"), t " ? ", i(2, "then"), t " : ", i(3, "else")),
-})
-
 ls.add_snippets("lua", {
   s("lsreq", fmt([[local {} = require "{}"]],
     { f(function(import_name)

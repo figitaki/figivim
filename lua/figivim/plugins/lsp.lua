@@ -17,7 +17,8 @@ local M = {
     { 'hrsh7th/nvim-cmp' },     -- Required
     { 'hrsh7th/cmp-nvim-lsp' }, -- Required
     { 'hrsh7th/cmp-nvim-lua' },
-    { 'L3MON4D3/LuaSnip' },     -- Required
+    { 'saadparwaiz1/cmp_luasnip' },
+    { 'L3MON4D3/LuaSnip' }, -- Required
     { 'rafamadriz/friendly-snippets' },
 
     { 'glepnir/lspsaga.nvim' },
@@ -32,11 +33,11 @@ M.config = function()
     name = 'recommended',
   })
 
-  lsp.ensure_installed({
-    'tsserver',
-    'eslint',
-    'rust_analyzer'
-  })
+  -- lsp.ensure_installed({
+  --   'tsserver',
+  --   'eslint',
+  --   'rust_analyzer'
+  -- })
 
   lsp.on_attach(function(client, bufnr)
     lsp.default_keymaps({
@@ -58,9 +59,20 @@ M.config = function()
     end
   end)
 
-  local lspconfig = require('lspconfig')
+  require('mason').setup({})
+  require('mason-lspconfig').setup({
+    handlers = {
+      function(server_name)
+        require('lspconfig')[server_name].setup({})
+      end,
+      lua_ls = function()
+        local lua_opts = lsp.nvim_lua_ls()
+        require('lspconfig').lua_ls.setup(lua_opts)
+      end
+    }
+  })
 
-  lspconfig.lua_ls.setup(lsp.nvim_lua_ls())
+  local lspconfig = require('lspconfig')
 
   require('lspconfig.configs').sourcekit = {
     default_config = {
@@ -74,8 +86,6 @@ M.config = function()
   lspconfig.sourcekit.setup {
     cmd = { "/Users/figitaki/.local/share/nvim/mason/bin/elixir-ls" }
   }
-  lspconfig.elixirls.setup({})
-  lspconfig.ocamllsp.setup({})
   lspconfig.texlab.setup {
     settings = {
       texlab = {
