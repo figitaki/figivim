@@ -4,12 +4,14 @@ description: A list of tasks to be done in my Neovim configuration
 authors: figitaki
 categories: 
 created: 2024-06-05T16:24:11-0800
-updated: 2024-06-11T17:27:41-0800
+updated: 2024-06-12T17:07:57-0800
 version: 1.1.1
 @end
 
 * Figivim outstanding tasks
   - (x) Re-enable luasnip
+  - (x) nvim-dap and nvim-dap-ui for debugging
+  - ( ) comment.nvim
   - ( ) Install fugitive for git integration
   - ( ) Install {https://github.com/tpope/vim-dadbod}[vim-dadbod] for database integration
   -- ( ) Install {https://github.com/kristijanhusak/vim-dadbod-ui}[vim-dadbod-ui] for a better interface

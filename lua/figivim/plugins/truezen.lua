@@ -3,4 +3,6 @@ local M = {
   opts = {},
 }
 
+vim.keymap.set('n', '<leader>z', ':TZAtaraxis<CR>')
+
 return M
