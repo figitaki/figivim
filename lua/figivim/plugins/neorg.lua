@@ -80,7 +80,8 @@ M.config = function()
     })
   end)
 
-  vim.keymap.set('n', '<leader>n', ':Neorg workspace notes<CR>')
+  vim.keymap.set('n', '<leader>no', ':Neorg workspace notes<CR>')
+  vim.keymap.set('n', '<leader>nt', ':Neorg journal<CR>')
 end
 
 return M

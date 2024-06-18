@@ -27,6 +27,4 @@ vim.keymap.set('n', '<esc>u', '<cmd>nohlsearch<cr>')
 -- folds
 vim.keymap.set('n', '<space>', 'za')
 
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
-
 vim.keymap.set('n', '<leader>rs', '<cmd>so ~/.config/nvim/lua/figivim/snippets/init.lua<cr>')

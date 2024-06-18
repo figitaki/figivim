@@ -22,6 +22,10 @@ local get_test_result = function(position)
   end, {})
 end
 
+ls.add_snippets("typescriptreact", {
+  s("cl", { t "className=\"", i(1), t "\"" }),
+})
+
 ls.add_snippets("lua", {
   s("lsreq", fmt([[local {} = require "{}"]],
     { f(function(import_name)
