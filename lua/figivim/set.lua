@@ -7,11 +7,11 @@ vim.opt.hidden = true
 vim.opt.nu = true
 vim.opt.relativenumber = true
 
-vim.opt.expandtab = true -- convert tabs to spaces
-vim.opt.shiftwidth = 2   -- set number for autoindent
-vim.opt.softtabstop = 2  -- number of spaces per tab
+vim.opt.expandtab = true    -- convert tabs to spaces
+vim.opt.shiftwidth = 2      -- set number for autoindent
+vim.opt.softtabstop = 2     -- number of spaces per tab
 
-vim.opt.smartindent = true
+vim.opt.smartindent = false -- prefer treesitter indent
 
 vim.opt.wrap = true
 

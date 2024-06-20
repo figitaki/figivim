@@ -17,6 +17,14 @@ M.config = function()
       enable = true,
     },
 
+    indent = {
+      enable = true,
+    },
+
+    fold = {
+      enable = true,
+    },
+
     textobjects = {
       select = {
         enable = true,

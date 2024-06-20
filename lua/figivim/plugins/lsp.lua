@@ -25,6 +25,8 @@ local M = {
     { 'f3fora/nvim-texlabconfig' },
 
     { 'github/copilot.vim' },
+
+    { 'windwp/nvim-autopairs' },
   },
 }
 
@@ -124,7 +126,7 @@ M.config = function()
   cmp.setup({
     preselect = cmp.PreselectMode.None,
     completion = {
-      completeopt = 'menu,menuone,noselect,noinsert'
+      completeopt = 'menu,menuone,noinsert'
     },
     sources = cmp.config.sources({
       { name = 'nvim_lsp' },
@@ -142,7 +144,7 @@ M.config = function()
     mapping = {
       ['<Tab>'] = cmp.config.disable,
       ['<S-Tab>'] = cmp.config.disable,
-      ['<CR>'] = cmp.mapping.confirm(),
+      ['<CR>'] = cmp.mapping.confirm({ select = true }),
       ['<C-Space>'] = cmp.mapping.complete(),
       ['<C-e>'] = cmp.mapping.abort(),
       ['<C-j>'] = cmp.mapping(function(fallback)
@@ -185,6 +187,12 @@ M.config = function()
     }
   })
 
+  local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+  cmp.event:on(
+    'confirm_done',
+    cmp_autopairs.on_confirm_done()
+  )
+
   -- lspsaga config
   require('lspsaga').setup({
     lightbulb = {
@@ -192,7 +200,7 @@ M.config = function()
     }
   })
   vim.keymap.set('n', 'gh', '<cmd>Lspsaga lsp_finder<cr>')
-  vim.keymap.set('n', 'gk', '<cmd>Lspsaga show_cursor_diagnostics<cr>')
+  vim.keymap.set('n', '<leader>ca', '<cmd>Lspsaga code_action<cr>')
 end
 
 return M

@@ -19,6 +19,8 @@ M.config = function()
       }
     }
   }
+  require('luasnip').filetype_extend("javascriptreact", { "html" })
+  require('luasnip').filetype_extend("typescriptreact", { "html" })
 end
 
 return M
