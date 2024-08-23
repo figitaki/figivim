@@ -53,3 +53,11 @@ vim.opt.incsearch = true
 vim.cmd([[ autocmd BufRead,BufNewFile *.tex set filetype=tex ]])
 
 vim.copilot_no_tab_map = false
+
+vim.opt.updatetime = 300
+vim.api.nvim_create_autocmd("CursorHold", { callback = function() vim.diagnostic.open_float(nil, { focus = false }) end })
+
+vim.api.nvim_set_hl(0, "DiagnosticUnderlineError", { undercurl = true, sp = "red" })
+vim.api.nvim_set_hl(0, "DiagnosticUnderlineWarn", { undercurl = true, sp = "yellow" })
+vim.api.nvim_set_hl(0, "DiagnosticUnderlineInfo", { undercurl = true, sp = "blue" })
+vim.api.nvim_set_hl(0, "DiagnosticUnderlineHint", { undercurl = true, sp = "green" })

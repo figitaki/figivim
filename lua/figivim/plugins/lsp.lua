@@ -47,6 +47,23 @@ M.config = function()
       preserve_mappings = false,
     })
 
+    -- Diagnostic configuration
+    vim.diagnostic.config({
+      underline = true,
+      virtual_text = false,
+      signs = false,
+      update_in_insert = false,
+      severity_sort = true,
+      float = {
+        focusable = false,
+        style = "minimal",
+        border = "rounded",
+        source = "if_many",
+        header = "",
+        prefix = "",
+      }
+    })
+
     -- HACK: prevent tsserver from competing with denols
     if require "lspconfig".util.root_pattern("deno.json", "deno.jsonc")(vim.fn.getcwd()) then
       if client.name == "tsserver" then
