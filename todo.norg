@@ -4,7 +4,7 @@ description: A list of tasks to be done in my Neovim configuration
 authors: figitaki
 categories: 
 created: 2024-06-05T16:24:11-0800
-updated: 2024-06-12T17:07:57-0800
+updated: 2024-11-06T16:18:03-0800
 version: 1.1.1
 @end
 
@@ -15,3 +15,4 @@ version: 1.1.1
   - ( ) Install fugitive for git integration
   - ( ) Install {https://github.com/tpope/vim-dadbod}[vim-dadbod] for database integration
   -- ( ) Install {https://github.com/kristijanhusak/vim-dadbod-ui}[vim-dadbod-ui] for a better interface
+  - ( ) Replace co-pilot with tabnine
