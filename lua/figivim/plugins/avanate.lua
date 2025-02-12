@@ -1,5 +1,8 @@
 local function check_internet_connection()
   local handle = io.popen("ping -c 1 google.com | grep '1 packets'")
+  if not handle then
+    return false
+  end
   local result = handle:read("*a")
   handle:close()
   local good = "1 packets transmitted, 1 packets received"
@@ -13,7 +16,17 @@ local M = {
   version = false, -- set this if you want to always pull the latest change
   config = function()
     require("avante").setup({
-      provider = check_internet_connection() and "copilot" or "ollama",
+      windows = {
+        position = "bottom"
+      },
+      provider = check_internet_connection() and "claude" or "ollama",
+      openai = {
+        endpoint = "https://api.openai.com/v1",
+        model = "o1-mini",
+        timeout = 30000,
+        temperature = 0,
+        max_tokens = 4096,
+      },
       vendors = {
         ---@type AvanteProvider
         ollama = {
@@ -33,9 +46,8 @@ local M = {
     "nvim-lua/plenary.nvim",
     "MunifTanjim/nui.nvim",
     --- The below dependencies are optional,
-    "hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
+    "hrsh7th/nvim-cmp",            -- autocompletion for avante commands and mentions
     "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
-    "zbirenbaum/copilot.lua", -- for providers='copilot'
     {
       -- Make sure to set this up properly if you have lazy=true
       'MeanderingProgrammer/render-markdown.nvim',

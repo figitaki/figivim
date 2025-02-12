@@ -1,6 +1,6 @@
 vim.g.mapleader = ','
 
-vim.opt.laststatus = 2
+vim.opt.laststatus = 3
 
 vim.opt.hidden = true
 

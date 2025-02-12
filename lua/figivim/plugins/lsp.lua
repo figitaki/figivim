@@ -218,6 +218,7 @@ M.config = function()
   })
   vim.keymap.set('n', 'gh', '<cmd>Lspsaga lsp_finder<cr>')
   vim.keymap.set('n', '<leader>ca', '<cmd>Lspsaga code_action<cr>')
+  vim.keymap.set('n', '<leader>cd', '<cmd>Lspsaga show_workspace_diagnostics<cr>')
 end
 
 return M

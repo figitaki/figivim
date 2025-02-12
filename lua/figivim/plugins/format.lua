@@ -2,14 +2,16 @@ local M = {
   "stevearc/conform.nvim",
 }
 
+local jsFromatters = { "prettierd", "prettier" }
+
 M.config = function()
   require("conform").setup({
     formatters_by_ft = {
       -- Use a sub-list to run only the first available formatter
-      javascript = { { "prettierd", "prettier" } },
-      javascriptreact = { { "prettierd", "prettier" } },
-      typescript = { { "prettierd", "prettier" } },
-      typescriptreact = { { "prettierd", "prettier" } },
+      javascript = jsFromatters,
+      javascriptreact = jsFromatters,
+      typescript = jsFromatters,
+      typescriptreact = jsFromatters,
     },
   })
 
