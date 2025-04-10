@@ -20,6 +20,16 @@ local M = {
         position = "bottom"
       },
       provider = check_internet_connection() and "claude" or "ollama",
+      cursor_applying_provider = 'fastapply',
+      -- behaviour = {
+      --   enable_cursor_planning_mode = true,
+      -- },
+      claude = {
+        endpoint = "https://api.anthropic.com",
+        model = "claude-3-7-sonnet-20250219",
+        temperature = 0,
+        max_tokens = 4096,
+      },
       openai = {
         endpoint = "https://api.openai.com/v1",
         model = "o1-mini",
@@ -28,6 +38,13 @@ local M = {
         max_tokens = 4096,
       },
       vendors = {
+        ---@type AvanteProvider
+        fastapply = {
+          __inherited_from = 'openai',
+          api_key_name = '',
+          endpoint = 'http://localhost:11434/v1',
+          model = 'hf.co/Kortix/FastApply-7B-v1.0_GGUF:Q4_K_M',
+        },
         ---@type AvanteProvider
         ollama = {
           __inherited_from = "openai",
