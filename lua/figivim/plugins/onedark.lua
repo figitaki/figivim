@@ -4,7 +4,11 @@ local M = {
 
 M.config = function()
   require 'onedark'.setup {
-    style = "darker"
+    style = "darker",
+    highlight = {
+      ['WinBar'] = { bg = "NvimLightGrey1" }
+    }
+
   }
   vim.cmd([[ colorscheme onedark ]])
 end

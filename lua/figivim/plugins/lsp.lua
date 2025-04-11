@@ -35,9 +35,13 @@ M.config = function()
     name = 'recommended',
   })
 
+  -- TODO: move these to the mason config
   -- lsp.ensure_installed({
-  --   'tsserver',
   --   'eslint',
+  --   'prettierd',
+  --   'lua_ls',
+  --   'tailwindcss',
+  --   'ts_ls',
   --   'rust_analyzer'
   -- })
 

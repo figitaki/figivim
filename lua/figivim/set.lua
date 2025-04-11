@@ -63,8 +63,6 @@ vim.api.nvim_set_hl(0, "DiagnosticUnderlineInfo", { undercurl = true, sp = "blue
 vim.api.nvim_set_hl(0, "DiagnosticUnderlineHint", { undercurl = true, sp = "green" })
 
 -- WinBar config
-local normal = vim.api.nvim_get_hl(0, { name = "Normal", link = false })
-vim.api.nvim_set_hl(0, "WinBar", { fg = normal.fg, bg = normal.bg })
 vim.opt.winbar = "%{%v:lua.winbar()%}"
 
 function _G.winbar()
@@ -80,5 +78,5 @@ function _G.winbar()
   end
 
   -- No LSP attached or lspsaga unavailable: fallback to filename
-  return "%f"
+  return " 󰈔 %f"
 end
