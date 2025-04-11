@@ -61,3 +61,24 @@ vim.api.nvim_set_hl(0, "DiagnosticUnderlineError", { undercurl = true, sp = "red
 vim.api.nvim_set_hl(0, "DiagnosticUnderlineWarn", { undercurl = true, sp = "yellow" })
 vim.api.nvim_set_hl(0, "DiagnosticUnderlineInfo", { undercurl = true, sp = "blue" })
 vim.api.nvim_set_hl(0, "DiagnosticUnderlineHint", { undercurl = true, sp = "green" })
+
+-- WinBar config
+local normal = vim.api.nvim_get_hl(0, { name = "Normal", link = false })
+vim.api.nvim_set_hl(0, "WinBar", { fg = normal.fg, bg = normal.bg })
+vim.opt.winbar = "%{%v:lua.winbar()%}"
+
+function _G.winbar()
+  local buf_clients = vim.lsp.get_clients({ bufnr = 0 })
+
+  -- Check if any LSP client is attached
+  if next(buf_clients) ~= nil then
+    -- LSP attached: use lspsaga context
+    local ok, context = pcall(require, 'lspsaga.symbol.winbar')
+    if ok then
+      return context.get_bar()
+    end
+  end
+
+  -- No LSP attached or lspsaga unavailable: fallback to filename
+  return "%f"
+end
