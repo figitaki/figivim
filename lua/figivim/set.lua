@@ -74,9 +74,22 @@ function _G.winbar()
     local ok, context = pcall(require, 'lspsaga.symbol.winbar')
     if ok then
       return context.get_bar()
+    else
+      -- Fallback to filename if lspsaga is not available
+      return " 󰈔 %f"
     end
   end
 
   -- No LSP attached or lspsaga unavailable: fallback to filename
   return " 󰈔 %f"
 end
+
+vim.api.nvim_create_autocmd({ "TermOpen", "BufEnter", "WinEnter" }, {
+  pattern = "term://*",
+  callback = function()
+    -- Check that we're not already in Terminal mode
+    if vim.fn.mode() ~= 't' then
+      vim.cmd("startinsert")
+    end
+  end,
+})

@@ -28,3 +28,36 @@ vim.keymap.set('n', '<esc>u', '<cmd>nohlsearch<cr>')
 vim.keymap.set('n', '<space>', 'za')
 
 vim.keymap.set('n', '<leader>rs', '<cmd>so ~/.config/nvim/lua/figivim/snippets/init.lua<cr>')
+
+function _G.send_visual_to_terminal()
+  -- Save the current visual selection to a register
+  local _, ls, cs = unpack(vim.fn.getpos("'<"))
+  local _, le, ce = unpack(vim.fn.getpos("'>"))
+
+  local lines = vim.fn.getline(ls, le)
+  if #lines == 0 then return end
+
+  lines[#lines] = string.sub(lines[#lines], 1, ce)
+  lines[1] = string.sub(lines[1], cs)
+
+  -- Get the current window ID and move to the terminal (right)
+  local cur_win = vim.api.nvim_get_current_win()
+  vim.cmd("wincmd l") -- move right (assumes terminal is there)
+
+  local term_win = vim.api.nvim_get_current_win()
+  local term_buf = vim.api.nvim_get_current_buf()
+
+  -- Ensure we're in terminal mode
+  vim.cmd("startinsert")
+
+  -- Send the lines
+  for _, line in ipairs(lines) do
+    vim.api.nvim_chan_send(vim.b.terminal_job_id, line .. "\n")
+  end
+
+  -- Return to original window
+  vim.api.nvim_set_current_win(cur_win)
+end
+
+-- Map it to a key in visual mode
+vim.keymap.set("v", "<leader>ts", ":<C-u>lua send_visual_to_terminal()<CR>", { noremap = true, silent = true })
