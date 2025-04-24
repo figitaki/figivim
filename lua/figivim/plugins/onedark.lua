@@ -8,7 +8,6 @@ M.config = function()
     highlight = {
       ['WinBar'] = { bg = "NvimLightGrey1" }
     }
-
   }
   vim.cmd([[ colorscheme onedark ]])
 end

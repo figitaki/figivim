@@ -63,7 +63,7 @@ vim.api.nvim_set_hl(0, "DiagnosticUnderlineInfo", { undercurl = true, sp = "blue
 vim.api.nvim_set_hl(0, "DiagnosticUnderlineHint", { undercurl = true, sp = "green" })
 
 -- WinBar config
-vim.opt.winbar = "%{%v:lua.winbar()%}"
+-- vim.opt.winbar = "%{%v:lua.winbar()%}"
 
 function _G.winbar()
   local buf_clients = vim.lsp.get_clients({ bufnr = 0 })
@@ -75,8 +75,30 @@ function _G.winbar()
     if ok then
       return context.get_bar()
     else
-      -- Fallback to filename if lspsaga is not available
-      return " 󰈔 %f"
+      -- set simple name for no name or quickfix or terminal
+      local bufnr = vim.api.nvim_get_current_buf()
+      local bufname = vim.api.nvim_buf_get_name(bufnr)
+      local filename = vim.fn.fnamemodify(bufname, ":t")
+      local filetype = vim.api.nvim_get_option_value("filetype", { buf = bufnr })
+      local buftype = vim.api.nvim_get_option_value("buftype", { buf = bufnr })
+      local is_quickfix = buftype == "quickfix"
+      local is_terminal = buftype == "terminal"
+      local is_no_name = filename == "" and filetype == "" and buftype == ""
+      local is_floating = vim.api.nvim_get_option_value("winblend", { win = 0 }) > 0
+
+      if is_quickfix then
+        return "Quickfix"
+      elseif is_terminal then
+        local term_name = vim.api.nvim_get_option_value("term_name", { buf = bufnr })
+        return " Terminal: " .. term_name
+      elseif is_no_name then
+        return "No Name"
+      elseif is_floating then
+        return "Floating Window"
+      else
+        -- Fallback to filename if lspsaga is not available
+        return " 󰈔 %f"
+      end
     end
   end
 
