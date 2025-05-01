@@ -29,6 +29,11 @@ vim.keymap.set('n', '<space>', 'za')
 
 vim.keymap.set('n', '<leader>rs', '<cmd>so ~/.config/nvim/lua/figivim/snippets/init.lua<cr>')
 
+vim.keymap.set('n', '<leader>tt', function()
+  vim.cmd('vsplit | terminal')
+  vim.cmd('startinsert')
+end, { noremap = true, silent = true })
+
 function _G.send_visual_to_terminal()
   -- Save the current visual selection to a register
   local _, ls, cs = unpack(vim.fn.getpos("'<"))
