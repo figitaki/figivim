@@ -4,6 +4,7 @@ local M = {
 }
 
 M.config = function()
+  vim.g.copilot_enabled = false
   vim.keymap.set('i', '<C-s>', '<Plug>(copilot-suggest)', { noremap = false })
   vim.g.copilot_filetypes = {
     ['TelescopePrompt'] = false,
