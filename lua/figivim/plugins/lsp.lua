@@ -68,48 +68,38 @@ M.config = function()
       }
     })
 
-    -- HACK: prevent tsserver from competing with denols
-    if require "lspconfig".util.root_pattern("deno.json", "deno.jsonc")(vim.fn.getcwd()) then
-      if client.name == "tsserver" then
-        client.stop()
+    -- HACK: prevent ts_ls from competing with denols
+    if vim.fs.root(vim.fn.getcwd(), { "deno.json", "deno.jsonc" }) then
+      if client.name == "ts_ls" or client.name == "tsserver" then
+        client:stop()
         return
       end
     else
       if client.name == "denols" then
-        client.stop()
+        client:stop()
         return
       end
     end
   end)
 
   require('mason').setup({})
-  require('mason-lspconfig').setup({
-    handlers = {
-      function(server_name)
-        require('lspconfig')[server_name].setup({})
-      end,
-      lua_ls = function()
-        local lua_opts = lsp.nvim_lua_ls()
-        require('lspconfig').lua_ls.setup(lua_opts)
-      end
-    }
+  -- mason-lspconfig v2 automatically runs vim.lsp.enable() for every installed
+  -- server (the old `handlers` option is gone). Per-server tweaks go through
+  -- vim.lsp.config() instead of require('lspconfig').<server>.setup().
+  require('mason-lspconfig').setup({})
+
+  vim.lsp.config('*', {
+    capabilities = require('cmp_nvim_lsp').default_capabilities(),
   })
 
-  local lspconfig = require('lspconfig')
+  vim.lsp.config('lua_ls', lsp.nvim_lua_ls())
 
-  require('lspconfig.configs').sourcekit = {
-    default_config = {
-      cmd = { 'sourcekit-lsp' },
-      filetypes = { 'swift', 'c', 'cpp', 'objective-c', 'objective-cpp' },
-      root_dir = require('lspconfig.util')
-          .root_pattern('Package.swift', 'buildServer.json', 'compile_commands.json',
-            '.git'),
-    }
-  }
-  lspconfig.sourcekit.setup {
-    cmd = { "/Users/figitaki/.local/share/nvim/mason/bin/elixir-ls" }
-  }
-  lspconfig.texlab.setup {
+  vim.lsp.config('sourcekit', {
+    filetypes = { 'swift', 'c', 'cpp', 'objective-c', 'objective-cpp' },
+    root_markers = { 'Package.swift', 'buildServer.json', 'compile_commands.json', '.git' },
+  })
+
+  vim.lsp.config('texlab', {
     settings = {
       texlab = {
         forwardSearch = {
@@ -131,7 +121,10 @@ M.config = function()
         }
       }
     }
-  }
+  })
+
+  -- not managed by mason, so enable explicitly
+  vim.lsp.enable({ 'sourcekit', 'texlab' })
 
   lsp.setup()
 

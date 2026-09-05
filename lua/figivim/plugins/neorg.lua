@@ -2,6 +2,12 @@ local M = {
   "nvim-neorg/neorg",
   lazy = false,  -- Disable lazy loading as some `lazy.nvim` distributions set `lazy = true` by default
   version = "*", -- Pin Neorg to the latest stable release
+  -- The norg parsers come from luarocks (declared in neorg's rockspec). lazy
+  -- loads those rock packages as separate plugins and only adds them to
+  -- package.cpath when they load, which by default happens *after* neorg has
+  -- already looked for its parsers. Listing them as dependencies forces the
+  -- right order.
+  dependencies = { "tree-sitter-norg", "tree-sitter-norg-meta" },
 }
 
 local remap = function(keybinds)
